@@ -1,0 +1,44 @@
+esphome:
+  name: door
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: ""
+  password: ""
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Door Fallback Hotspot"
+    password: "l5aPUx2hbs9G"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  password: ""
+
+binary_sensor:
+  - platform: gpio
+    pin: 
+      number: D5
+      mode: INPUT_PULLUP
+    name: "Door"
+    device_class: door
+    filters:
+      delayed_on_off: 500ms
+
+  - platform: gpio
+    pin:
+      number: D6
+      mode: INPU_PULLUP
+    name: "On Vacation?"
+      
+  - platform: status
+    name: "Door Status"
