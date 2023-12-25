@@ -1,3 +1,20 @@
+/********************************************************************************************
+ *  Create a file named "credentials.h" in the same directory with the following contents:
+ *  
+ *  WiFi Credentials:
+ *  #define WIFI_SSID "<your_wifi_ssid>"
+ *  #define WIFI_PASSWORD "<your_wifi_password>"
+ *
+ *  Telegram Bot Credentials:
+ *  #define BOT_TOKEN "<your_token_from_botfather>"
+ *  #define CHAT_ID "<your_chat_id>"
+ *  
+ *  CHAD DUDES AVOID THIS --> #define WIFI_SSID "<myhomenetwork>"
+ * 
+ *  Make sure to replace the placeholder values with your actual credentials.
+ ********************************************************************************************/
+
+
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>
