@@ -22,7 +22,8 @@
 #include "credentials.h"
 
 #define BOT_MESSAGE "ALERT DOOR OPENED"
-const int BUTTON=2;
+const int BUTTON = 14;
+bool notification = false;
 
 X509List cert(TELEGRAM_CERTIFICATE_ROOT);
 WiFiClientSecure secured_client;
@@ -30,7 +31,8 @@ UniversalTelegramBot bot(BOT_TOKEN, secured_client);
 
 void setup() {
   pinMode(BUTTON, INPUT_PULLUP);
-
+  pinMode(LED_BUILTIN, OUTPUT);
+  
   Serial.begin(115200);
   Serial.println();
 
@@ -58,26 +60,32 @@ void setup() {
   }
   Serial.println(now);
 
-  bot.sendMessage(CHAT_ID, "Bot started up", "");
+  bot.sendMessage(CHAT_ID, "Bot started up...\nMy IP address : %s", "");
 }
 void door_open() {
 
   // Changed to send a Telegram message
   bot.sendMessage(CHAT_ID, BOT_MESSAGE);
+
+
 }
 void door_closed() {
 
   // Changed to send a Telegram message
   bot.sendMessage(CHAT_ID, "door closed!");
+
 }
 void loop() {
   int button = digitalRead(BUTTON);
   if (button == LOW)
   {
-    door_open();
+    digitalWrite(LED_BUILTIN, HIGH);
+    door_closed();
+
   }
   else
   {
-    door_closed();
+    digitalWrite(LED_BUILTIN, LOW);
+    door_open();
   }
 }
