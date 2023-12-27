@@ -25,7 +25,7 @@
 #define BOT_MESSAGE_CLOSE "-------------------------------DOOR CLOSED"
 
 const int BUTTON = 14;
-bool notification = false;
+bool log_flag = false;
 
 X509List cert(TELEGRAM_CERTIFICATE_ROOT);
 WiFiClientSecure secured_client;
@@ -49,7 +49,9 @@ void setup() {
     delay(500);
   }
   Serial.print("\nWiFi connected. IP address: ");
-  Serial.println(WiFi.localIP());
+  IPAddress localIP = WiFi.localIP();
+  String ip_address = localIP.toString();
+  Serial.println(ip_address);
 
   Serial.print("Retrieving time: ");
   configTime(0, 0, "pool.ntp.org"); // get UTC time via NTP
@@ -62,7 +64,9 @@ void setup() {
   }
   Serial.println(now);
 
-  bot.sendMessage(CHAT_ID, "Bot started up...\nMy IP address : %s", WiFi.localIP().toString().c_str());
+  bot.sendMessage(CHAT_ID, "Bot started up...\nMy IP address : "+ ip_address, "");
+
+
 }
 void door_open() {
 
