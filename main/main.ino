@@ -21,7 +21,9 @@
 #include <ArduinoJson.h>
 #include "credentials.h"
 
-#define BOT_MESSAGE "ALERT DOOR OPENED"
+#define BOT_MESSAGE_OPEN "ALERT DOOR OPENED"
+#define BOT_MESSAGE_CLOSE "-------------------------------DOOR CLOSED"
+
 const int BUTTON = 14;
 bool notification = false;
 
@@ -60,19 +62,19 @@ void setup() {
   }
   Serial.println(now);
 
-  bot.sendMessage(CHAT_ID, "Bot started up...\nMy IP address : %s", "");
+  bot.sendMessage(CHAT_ID, "Bot started up...\nMy IP address : %s", WiFi.localIP().toString().c_str());
 }
 void door_open() {
 
   // Changed to send a Telegram message
-  bot.sendMessage(CHAT_ID, BOT_MESSAGE);
+  bot.sendMessage(CHAT_ID, BOT_MESSAGE_OPEN);
 
 
 }
 void door_closed() {
 
   // Changed to send a Telegram message
-  bot.sendMessage(CHAT_ID, "door closed!");
+  bot.sendMessage(CHAT_ID, BOT_MESSAGE_CLOSE);
 
 }
 void loop() {
