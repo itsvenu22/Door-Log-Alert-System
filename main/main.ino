@@ -64,7 +64,8 @@ void setup() {
   }
   Serial.println(now);
 
-  bot.sendMessage(CHAT_ID, "Bot started up...\nMy IP address : "+ ip_address, "");
+  bot.sendMessage(CHAT_ID, 
+  "Initiating 𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭 Sequence\n\nBot Started..\n\nBOT ONLINE 🌐 AND READY ✅\n\n🌐 IP address : "+ ip_address + "", "");
 
 
 }
