@@ -27,10 +27,54 @@
 
 const int BUTTON = 14;
 bool log_flag = false;
+String ip_address;
+
+const unsigned long BOT_MTBS = 1000;
 
 X509List cert(TELEGRAM_CERTIFICATE_ROOT);
 WiFiClientSecure secured_client;
 UniversalTelegramBot bot(BOT_TOKEN, secured_client);
+unsigned long bot_lasttime;          // last time messages' scan has been done
+bool Start = false;
+
+void handleNewMessages(int numNewMessages)
+{
+  Serial.println("handleNewMessages");
+  Serial.println(String(numNewMessages));
+
+  for (int i = 0; i < numNewMessages; i++)
+  {
+    String chat_id = bot.messages[i].chat_id;
+    String text = bot.messages[i].text;
+
+    String from_name = bot.messages[i].from_name;
+
+    if (from_name == "")
+      from_name = "Guest";
+
+    if (text == "/send-iproto" )
+    {
+      bot.sendChatAction(CHAT_ID, "typing");
+      delay(4000);
+      
+      String new_message = "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞" ;
+      new_message += "\n\n💠 Trigger Mode : MANUAL 🛑" ;
+      new_message += "\n\n💠 Triggered By : " + from_name ;
+      new_message += "\n\nBot Status : ONLINE AND READY ✅" ;
+      new_message += "\n\n🌐 IP address : " + ip_address ;
+
+      bot.sendMessage(CHAT_ID, new_message, "");
+    }
+    else if (chat_id == CHAT_ID)
+    {
+      bot.sendMessage(CHAT_ID, "COMEON MANN");
+    }
+    else
+    {
+      bot.sendMessage(CHAT_ID, "RANDOM TRIGGER : " + from_name);
+    }
+  }
+}
 
 void setup() {
   pinMode(BUTTON, INPUT_PULLUP);
@@ -65,25 +109,19 @@ void setup() {
   }
   Serial.println(now);
 
-  bot.sendMessage(CHAT_ID, 
-  "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞\n\nBot Started...\n\nBOT ONLINE AND READY ✅\n\n🌐 IP address : "+ ip_address + "", "");
+  bot.sendMessage(CHAT_ID, "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞\n\n💠 Trigger Mode : BOOT\n\nBot Started...\n\nBOT ONLINE AND READY ✅\n\n🌐 IP address : "+ ip_address + "", "");
 
-  bot_setup();
 }
 void door_open() {
-
   // Changed to send a Telegram message
   bot.sendMessage(CHAT_ID, BOT_MESSAGE_OPEN);
-
-
 }
 void door_closed() {
-
   // Changed to send a Telegram message
   bot.sendMessage(CHAT_ID, BOT_MESSAGE_CLOSE);
-
 }
 void loop() {
+
   if (millis() - bot_lasttime > BOT_MTBS)
   {
     int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
@@ -97,7 +135,7 @@ void loop() {
 
     bot_lasttime = millis();
   }
-  
+
   int button = digitalRead(BUTTON);
   if (button == LOW)
   {
