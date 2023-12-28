@@ -20,8 +20,9 @@
 #include <UniversalTelegramBot.h>
 #include <ArduinoJson.h>
 #include "credentials.h"
+#include "bot-commands.h"
 
-#define BOT_MESSAGE_OPEN "ALERT DOOR OPENED"
+#define BOT_MESSAGE_OPEN "-------------------------------\n\nALERT DOOR OPENED\n\n-------------------------------"
 #define BOT_MESSAGE_CLOSE "-------------------------------DOOR CLOSED"
 
 const int BUTTON = 14;
@@ -65,9 +66,9 @@ void setup() {
   Serial.println(now);
 
   bot.sendMessage(CHAT_ID, 
-  "Initiating 𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭 Sequence\n\nBot Started..\n\nBOT ONLINE 🌐 AND READY ✅\n\n🌐 IP address : "+ ip_address + "", "");
+  "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞\n\nBot Started...\n\nBOT ONLINE AND READY ✅\n\n🌐 IP address : "+ ip_address + "", "");
 
-
+  bot_setup();
 }
 void door_open() {
 
@@ -83,6 +84,20 @@ void door_closed() {
 
 }
 void loop() {
+  if (millis() - bot_lasttime > BOT_MTBS)
+  {
+    int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+
+    while (numNewMessages)
+    {
+      Serial.println("got response");
+      handleNewMessages(numNewMessages);
+      numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+    }
+
+    bot_lasttime = millis();
+  }
+  
   int button = digitalRead(BUTTON);
   if (button == LOW)
   {
