@@ -46,16 +46,18 @@ void handleNewMessages(int numNewMessages)
   {
     String chat_id = bot.messages[i].chat_id;
     String text = bot.messages[i].text;
-
     String from_name = bot.messages[i].from_name;
 
+    String user = bot.messages[i].from_id;
+    String user_id = bot.messages[i].from_name;
+
+    
     if (from_name == "")
       from_name = "Guest";
 
-    if (text == "/send-iproto" )
+    if (text == "/send-iproto" && chat_id == CHAT_ID)
     {
       bot.sendChatAction(CHAT_ID, "typing");
-      delay(4000);
       
       String new_message = "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞" ;
       new_message += "\n\n💠 Trigger Mode : MANUAL 🛑" ;
@@ -65,13 +67,13 @@ void handleNewMessages(int numNewMessages)
 
       bot.sendMessage(CHAT_ID, new_message, "");
     }
-    else if (chat_id == CHAT_ID)
+    else if (text != "/send-iproto" && chat_id == CHAT_ID)
     {
-      bot.sendMessage(CHAT_ID, "COMEON MANN");
+      bot.sendMessage(CHAT_ID, "COMMON man "+text);
     }
     else
     {
-      bot.sendMessage(CHAT_ID, "RANDOM TRIGGER : " + from_name);
+      bot.sendMessage(CHAT_ID, "RANDOM TRIGGER : " + from_name + "\n\n"+user+"\n\n"+user_id+"\n\n"+text);
     }
   }
 }
