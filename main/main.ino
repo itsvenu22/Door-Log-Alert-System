@@ -26,8 +26,7 @@
 #define BOT_MESSAGE_CLOSE "❇️ ALERT DOOR CLOSED ✅"
 
 const int BUTTON = 14;
-bool log_flag = false;
-String ip_address;
+bool door_log = false;
 
 const unsigned long BOT_MTBS = 1000;
 
@@ -79,10 +78,13 @@ void handleNewMessages(int numNewMessages)
     if (from_name == "")
       from_name = "Guest";
 
-    if (text == "/send-iproto" && chat_id == CHAT_ID)
+    if (text == "/sendipaddress" && chat_id == CHAT_ID)
     {
       bot.sendChatAction(CHAT_ID, "typing");
-      
+
+      IPAddress localIP = WiFi.localIP();
+      String ip_address = localIP.toString();
+
       String new_message = "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞" ;
       new_message += "\n\n💠 Trigger Mode : Super User ~ MANUAL 🛑" ;
       new_message += "\n\n💠 Triggered By : " + from_name ;
@@ -91,30 +93,30 @@ void handleNewMessages(int numNewMessages)
 
       bot.sendMessage(CHAT_ID, new_message, "");
     }
-    else if (text != "/send-iproto" && chat_id == CHAT_ID)
+    else if (text != "/sendipaddress" && chat_id == CHAT_ID)
     {
-      bot.sendMessage(CHAT_ID, "COMMON man "+text);
+      bot.sendMessage(CHAT_ID, "Super User.../n/n" + text + "/n/nThat's not allowed 🥺💚"+text);
     }
     else
     {
-      String message ="❎ RANDOM TRIGGER ❎\n\nFrom Name:           " + from_name +
-                      "\nSent Text:           " + text +
-                      "\n\nChat ID:             " + chat_id +
-                      "\nChat Title:          " + chat_title +
-                      "\nDate:                " + date +
-                      "\nType:                " + type +
-                      "\nUpdate ID:           " + update_id +
-                      "\nMessage ID:          " + message_id +
-                      "\nFile Caption:        " + file_caption +
-                      "\nFile Path:           " + file_path +
-                      "\nFile Name:           " + file_name +
-                      "\nHas Document:        " + hasDocument +
-                      "\nFile Size:           " + file_size +
-                      "\nLatitude :           " + latitude +
-                      "\nLongitude:           " + longitude +
-                      "\nReply to Message ID: " + reply_to_message_id +
-                      "\nReply to Text:       " + reply_to_text +
-                      "\nQuery ID:            " + query_id;
+      String message ="❎ RANDOM TRIGGER ❎\n\nName : " + from_name +
+                      "\nSent Text : " + text +
+                      "\n\nChat ID : " + chat_id +
+                      "\nChat Title : " + chat_title +
+                      "\nDate : " + date +
+                      "\nType : " + type +
+                      "\nUpdate ID : " + update_id +
+                      "\nMessage ID : " + message_id +
+                      "\nFile Caption : " + file_caption +
+                      "\nFile Path : " + file_path +
+                      "\nFile Name : " + file_name +
+                      "\nHas Document : " + hasDocument +
+                      "\nFile Size : " + file_size +
+                      "\nLatitude  : " + latitude +
+                      "\nLongitude : " + longitude +
+                      "\nReply to Message I'D : " + reply_to_message_id +
+                      "\nReply to Text : " + reply_to_text +
+                      "\nQuery ID : " + query_id;
       bot.sendMessage(CHAT_ID, message, "");
     }
   }
