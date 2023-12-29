@@ -14,7 +14,6 @@
  *  Make sure to replace the placeholder values with your actual credentials.
  ********************************************************************************************/
 
-
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>
@@ -26,7 +25,7 @@
 #define BOT_MESSAGE_CLOSE "❇️ ALERT DOOR CLOSED ✅"
 
 const int BUTTON = 14;
-bool door_log = false;
+bool door_close = false;
 
 const unsigned long BOT_MTBS = 1000;
 
@@ -47,12 +46,11 @@ void handleNewMessages(int numNewMessages)
     String text = bot.messages[i].text;
     String from_name = bot.messages[i].from_name;
 
-/////////////////////////////////////////////////////////////////////
     String chat_title = bot.messages[i].chat_title;
     String date = bot.messages[i].date;
     String type = bot.messages[i].type;
 
-    // Additional properties
+    // Additional properties (not needed tho :} )
     String file_caption = bot.messages[i].file_caption;
     String file_path = bot.messages[i].file_path;
     String file_name = bot.messages[i].file_name;
@@ -70,11 +68,9 @@ void handleNewMessages(int numNewMessages)
     // Query ID (assuming query_id is associated with some specific type of message)
     String query_id = bot.messages[i].query_id;
 
-    // Construct your message
+    // Construct your message add whatever you want :3
 
-/////////////////////////////////////////////////////////////////////
 
-    
     if (from_name == "")
       from_name = "Guest";
 
@@ -95,7 +91,9 @@ void handleNewMessages(int numNewMessages)
     }
     else if (text != "/sendipaddress" && chat_id == CHAT_ID)
     {
-      bot.sendMessage(CHAT_ID, "Super User.../n/n" + text + "/n/nThat's not allowed 🥺💚"+text);
+      String new_message2 = "Super User...\n\n" + text ;
+      new_message2 += "\n\nThat's not allowed 🥺💚" ;
+      bot.sendMessage(CHAT_ID, new_message2);
     }
     else
     {
@@ -161,10 +159,12 @@ void setup() {
 void door_open() {
   // Changed to send a Telegram message
   bot.sendMessage(CHAT_ID, BOT_MESSAGE_OPEN);
+  door_close = false;
 }
 void door_closed() {
   // Changed to send a Telegram message
   bot.sendMessage(CHAT_ID, BOT_MESSAGE_CLOSE);
+  door_close = true;
 }
 void loop() {
 
@@ -186,8 +186,10 @@ void loop() {
   if (button == LOW)
   {
     digitalWrite(LED_BUILTIN, HIGH);
-    door_closed();
-
+    if (door_close == false)
+    {
+      door_closed();
+    }
   }
   else
   {
