@@ -22,8 +22,8 @@
 #include "credentials.h"
 #include "bot-commands.h"
 
-#define BOT_MESSAGE_OPEN "-------------------------------\n\nALERT DOOR OPENED\n\n-------------------------------"
-#define BOT_MESSAGE_CLOSE "-------------------------------DOOR CLOSED"
+#define BOT_MESSAGE_OPEN "🆘🆘🆘🆘🆘🆘🆘🆘🆘🆘\n\n⚠️ ALERT DOOR OPENED ⚠️"
+#define BOT_MESSAGE_CLOSE "❇️ ALERT DOOR CLOSED ✅"
 
 const int BUTTON = 14;
 bool log_flag = false;
@@ -86,7 +86,7 @@ void handleNewMessages(int numNewMessages)
       bot.sendChatAction(CHAT_ID, "typing");
       
       String new_message = "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞" ;
-      new_message += "\n\n💠 Trigger Mode : MANUAL 🛑" ;
+      new_message += "\n\n💠 Trigger Mode : Super User ~ MANUAL 🛑" ;
       new_message += "\n\n💠 Triggered By : " + from_name ;
       new_message += "\n\nBot Status : ONLINE AND READY ✅" ;
       new_message += "\n\n🌐 IP address : " + ip_address ;
@@ -112,15 +112,12 @@ void handleNewMessages(int numNewMessages)
                       "\nFile Name: " + file_name +
                       "\nHas Document: " + hasDocument +
                       "\nFile Size: " + file_size +
-                      "\nLongitude: " + longitude +
-                      "\nLatitude: " + latitude +
+                      "\nLongitude:Latitude : " + longitude + latitude +
                       "\nUpdate ID: " + update_id +
                       "\nMessage ID: " + message_id +
                       "\nReply to Message ID: " + reply_to_message_id +
                       "\nReply to Text: " + reply_to_text +
                       "\nQuery ID: " + query_id;
-
-    // Send the message
       bot.sendMessage(CHAT_ID, message, "");
     }
   }
