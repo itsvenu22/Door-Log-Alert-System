@@ -48,8 +48,34 @@ void handleNewMessages(int numNewMessages)
     String text = bot.messages[i].text;
     String from_name = bot.messages[i].from_name;
 
-    String user = bot.messages[i].from_id;
-    String user_id = bot.messages[i].from_name;
+/////////////////////////////////////////////////////////////////////
+    String user_id = bot.messages[i].from_id;
+    String chat_title = bot.messages[i].chat_title;
+    String from_id = bot.messages[i].from_id;
+    String date = bot.messages[i].date;
+    String type = bot.messages[i].type;
+
+    // Additional properties
+    String file_caption = bot.messages[i].file_caption;
+    String file_path = bot.messages[i].file_path;
+    String file_name = bot.messages[i].file_name;
+    boolean hasDocument = bot.messages[i].hasDocument;
+    long file_size = bot.messages[i].file_size;
+    float longitude = bot.messages[i].longitude;
+    float latitude = bot.messages[i].latitude;
+    int update_id = bot.messages[i].update_id;
+    int message_id = bot.messages[i].message_id;
+
+    // Reply information
+    int reply_to_message_id = bot.messages[i].reply_to_message_id;
+    String reply_to_text = bot.messages[i].reply_to_text;
+
+    // Query ID (assuming query_id is associated with some specific type of message)
+    String query_id = bot.messages[i].query_id;
+
+    // Construct your message
+
+/////////////////////////////////////////////////////////////////////
 
     
     if (from_name == "")
@@ -73,7 +99,29 @@ void handleNewMessages(int numNewMessages)
     }
     else
     {
-      bot.sendMessage(CHAT_ID, "RANDOM TRIGGER : " + from_name + "\n\n"+user+"\n\n"+user_id+"\n\n"+text);
+      String message ="Chat ID: " + chat_id +
+                      "\nText: " + text +
+                      "\nFrom Name: " + from_name +
+                      "\nUser ID: " + user_id +
+                      "\nChat Title: " + chat_title +
+                      "\nFrom ID: " + from_id +
+                      "\nDate: " + date +
+                      "\nType: " + type +
+                      "\nFile Caption: " + file_caption +
+                      "\nFile Path: " + file_path +
+                      "\nFile Name: " + file_name +
+                      "\nHas Document: " + hasDocument +
+                      "\nFile Size: " + file_size +
+                      "\nLongitude: " + longitude +
+                      "\nLatitude: " + latitude +
+                      "\nUpdate ID: " + update_id +
+                      "\nMessage ID: " + message_id +
+                      "\nReply to Message ID: " + reply_to_message_id +
+                      "\nReply to Text: " + reply_to_text +
+                      "\nQuery ID: " + query_id;
+
+    // Send the message
+      bot.sendMessage(CHAT_ID, message, "");
     }
   }
 }
