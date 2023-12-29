@@ -49,9 +49,7 @@ void handleNewMessages(int numNewMessages)
     String from_name = bot.messages[i].from_name;
 
 /////////////////////////////////////////////////////////////////////
-    String user_id = bot.messages[i].from_id;
     String chat_title = bot.messages[i].chat_title;
-    String from_id = bot.messages[i].from_id;
     String date = bot.messages[i].date;
     String type = bot.messages[i].type;
 
@@ -99,25 +97,24 @@ void handleNewMessages(int numNewMessages)
     }
     else
     {
-      String message ="Chat ID: " + chat_id +
-                      "\nText: " + text +
-                      "\nFrom Name: " + from_name +
-                      "\nUser ID: " + user_id +
-                      "\nChat Title: " + chat_title +
-                      "\nFrom ID: " + from_id +
-                      "\nDate: " + date +
-                      "\nType: " + type +
-                      "\nFile Caption: " + file_caption +
-                      "\nFile Path: " + file_path +
-                      "\nFile Name: " + file_name +
-                      "\nHas Document: " + hasDocument +
-                      "\nFile Size: " + file_size +
-                      "\nLongitude:Latitude : " + longitude + latitude +
-                      "\nUpdate ID: " + update_id +
-                      "\nMessage ID: " + message_id +
+      String message ="❎ RANDOM TRIGGER ❎\n\nFrom Name:           " + from_name +
+                      "\nSent Text:           " + text +
+                      "\n\nChat ID:             " + chat_id +
+                      "\nChat Title:          " + chat_title +
+                      "\nDate:                " + date +
+                      "\nType:                " + type +
+                      "\nUpdate ID:           " + update_id +
+                      "\nMessage ID:          " + message_id +
+                      "\nFile Caption:        " + file_caption +
+                      "\nFile Path:           " + file_path +
+                      "\nFile Name:           " + file_name +
+                      "\nHas Document:        " + hasDocument +
+                      "\nFile Size:           " + file_size +
+                      "\nLatitude :           " + latitude +
+                      "\nLongitude:           " + longitude +
                       "\nReply to Message ID: " + reply_to_message_id +
-                      "\nReply to Text: " + reply_to_text +
-                      "\nQuery ID: " + query_id;
+                      "\nReply to Text:       " + reply_to_text +
+                      "\nQuery ID:            " + query_id;
       bot.sendMessage(CHAT_ID, message, "");
     }
   }
