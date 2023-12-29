@@ -22,11 +22,12 @@
 #include "credentials.h"
 #include "bot-commands.h"
 
-const char* BOT_MESSAGE_OPEN = "🆘🆘🆘🆘🆘🆘🆘🆘🆘🆘\n\n⚠️ ALERT DOOR OPENED ⚠️";
-const char* BOT_MESSAGE_CLOSE = "❇️ ALERT DOOR CLOSED ✅";
+#define BOT_MESSAGE_OPEN "🆘🆘🆘🆘🆘🆘🆘🆘🆘🆘\n\n⚠️ ALERT DOOR OPENED ⚠️"
+#define BOT_MESSAGE_CLOSE "❇️ ALERT DOOR CLOSED ✅"
 
 const int BUTTON = 14;
-//bool log_flag = false;
+bool log_flag = false;
+String ip_address;
 
 const unsigned long BOT_MTBS = 1000;
 
@@ -38,8 +39,8 @@ bool Start = false;
 
 void handleNewMessages(int numNewMessages)
 {
-  //Serial.println("handleNewMessages");
-  //Serial.println(String(numNewMessages));
+  Serial.println("handleNewMessages");
+  Serial.println(String(numNewMessages));
 
   for (int i = 0; i < numNewMessages; i++)
   {
@@ -82,8 +83,11 @@ void handleNewMessages(int numNewMessages)
     {
       bot.sendChatAction(CHAT_ID, "typing");
       
-      String new_message = String("𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞\n\n💠 Trigger Mode : Super User ~ MANUAL 🛑\n\n💠 Triggered By : ")
-      + from_name + "\n\nBot Status : ONLINE AND READY ✅\n\n🌐 IP address : " + ip_address;
+      String new_message = "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞" ;
+      new_message += "\n\n💠 Trigger Mode : Super User ~ MANUAL 🛑" ;
+      new_message += "\n\n💠 Triggered By : " + from_name ;
+      new_message += "\n\nBot Status : ONLINE AND READY ✅" ;
+      new_message += "\n\n🌐 IP address : " + ip_address ;
 
       bot.sendMessage(CHAT_ID, new_message, "");
     }
@@ -120,34 +124,34 @@ void setup() {
   pinMode(BUTTON, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
   
-  //Serial.begin(115200);
-  //Serial.println();
+  Serial.begin(115200);
+  Serial.println();
 
-  //attempt to connect to Wifi network:
-  //Serial.print("Connecting to Wifi SSID ");
-  //Serial.print(WIFI_SSID);
+ // attempt to connect to Wifi network:
+  Serial.print("Connecting to Wifi SSID ");
+  Serial.print(WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   secured_client.setTrustAnchors(&cert); // Add root certificate for api.telegram.org
   while (WiFi.status() != WL_CONNECTED)
   {
-    //Serial.print(".");
-    //delay(100);
+    Serial.print(".");
+    delay(500);
   }
-  //Serial.print("\nWiFi connected. IP address: ");
+  Serial.print("\nWiFi connected. IP address: ");
   IPAddress localIP = WiFi.localIP();
   String ip_address = localIP.toString();
-  //Serial.println(ip_address);
+  Serial.println(ip_address);
 
-  //Serial.print("Retrieving time: ");
+  Serial.print("Retrieving time: ");
   configTime(0, 0, "pool.ntp.org"); // get UTC time via NTP
   time_t now = time(nullptr);
   while (now < 24 * 3600)
   {
-    //Serial.print(".");
-    //delay(50);
+    Serial.print(".");
+    delay(100);
     now = time(nullptr);
   }
-  //Serial.println(now);
+  Serial.println(now);
 
   bot.sendMessage(CHAT_ID, "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞\n\n💠 Trigger Mode : BOOT\n\nBot Started...\n\nBOT ONLINE AND READY ✅\n\n🌐 IP address : "+ ip_address + "", "");
 
@@ -168,7 +172,7 @@ void loop() {
 
     while (numNewMessages)
     {
-      //Serial.println("got response");
+      Serial.println("got response");
       handleNewMessages(numNewMessages);
       numNewMessages = bot.getUpdates(bot.last_message_received + 1);
     }
