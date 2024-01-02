@@ -24,8 +24,13 @@
 #define BOT_MESSAGE_OPEN "🆘🆘🆘🆘🆘🆘🆘🆘🆘🆘\n\n⚠️ ALERT DOOR OPENED ⚠️"
 #define BOT_MESSAGE_CLOSE "❇️ ALERT DOOR CLOSED ✅"
 
-const int BUTTON = 14;
+const int BUTTON = 0;
 bool door_close = false;
+
+// if you are adding any pass/act-ive indicators use "true"
+bool breq_flag = false;
+bool buzz_flag = false;
+const int BUZZ_PIN = 10;
 
 const unsigned long BOT_MTBS = 1000;
 
@@ -156,15 +161,27 @@ void setup() {
   bot.sendMessage(CHAT_ID, "𝐈𝐧𝐢𝐭𝐢𝐚𝐭𝐢𝐧𝐠  𝐃𝐨𝐨𝐫-𝐋𝐨𝐠-𝐀𝐥𝐞𝐫𝐭-𝐒𝐲𝐬𝐭𝐞𝐦-𝐁𝐨𝐭  𝐒𝐞𝐪𝐮𝐞𝐧𝐜𝐞\n\n💠 Trigger Mode : BOOT\n\nBot Started...\n\nBOT ONLINE AND READY ✅\n\n🌐 IP address : "+ ip_address + "", "");
 
 }
+void buzz_ntfy(bool bflag) {
+  if (breq_flag) {
+    if (bflag) {
+      digitalWrite(BUZZ_PIN, HIGH);
+    }
+    else {
+      digitalWrite(BUZZ_PIN, LOW);
+    }
+  }
+}
 void door_open() {
   // Changed to send a Telegram message
   bot.sendMessage(CHAT_ID, BOT_MESSAGE_OPEN);
   door_close = false;
+  buzz_ntfy(true);
 }
 void door_closed() {
   // Changed to send a Telegram message
   bot.sendMessage(CHAT_ID, BOT_MESSAGE_CLOSE);
   door_close = true;
+  buzz_ntfy(false);
 }
 void loop() {
 
